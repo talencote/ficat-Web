@@ -12,7 +12,7 @@ export const authentication = {
     login ({ dispatch, commit }, { username, password }) {
       commit('loginRequest', { username })
 
-      userService.login(username, password)
+      return userService.login(username, password)
         .then(
           user => {
             commit('loginSuccess', user)
@@ -24,7 +24,7 @@ export const authentication = {
         )
     },
     registration ({ dispatch, commit }, { username, email, password }) {
-      userService.registration(username, email, password)
+      return userService.registration(username, email, password)
     },
     logout ({ commit }) {
       userService.logout()

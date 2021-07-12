@@ -60,7 +60,7 @@
                 ) Registration
               .buttons-list.buttons-list--info
                 p.typo__p(v-if="submitStatus === 'OK'") Thanks for your submission!
-                p.typo__p(v-if="submitStatus === 'ERROR'") Please fill the form correctly.
+                p.typo__p(v-if="submitStatus === 'ERROR'") {{ errorMessage }}
                 p.typo__p(v-if="submitStatus === 'PENDING'") Sending...
               .buttons-list.buttons-list--info
                 span Do u have acount?
@@ -77,7 +77,8 @@ export default {
       email: '',
       password: '',
       repeatPassword: '',
-      submitStatus: null
+      submitStatus: null,
+      errorMessage: null
     }
   },
   validations: {
@@ -101,18 +102,25 @@ export default {
       this.$v.$touch()
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
+        this.errorMessage = 'Please fill the form correctly.'
       } else {
         // do your submit logic here
         this.submitStatus = 'PENDING'
+        this.errorMessage = null
 
         const { username, email, password } = this
         const { dispatch } = this.$store
-        if (username && password) {
+        if (username && email && password) {
           dispatch('authentication/registration', { username, email, password })
-          setTimeout(() => {
-            this.submitStatus = 'OK'
-            this.$router.push('/login')
-          }, 500)
+            .then(
+              () => {
+                this.submitStatus = 'OK'
+                this.$router.push('/login')
+              },
+              error => {
+                this.submitStatus = 'ERROR'
+                this.errorMessage = error
+              })
         }
       }
     }

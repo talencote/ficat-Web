@@ -57,9 +57,10 @@ function registration (username, email, password) {
 
   return fetch(`api/auth/signup`, requestOptions)
     .then(handleResponse)
-    .then(data => {
-      return data
-    })
+    .then(
+      data => {
+        return data
+      })
 }
 
 function logout () {
