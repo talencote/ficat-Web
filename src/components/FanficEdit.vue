@@ -13,12 +13,13 @@
           v-model="fanficDescription"
           placeholder="Fanfic Description here!"
         )
-        .fanfic-content-edit
-          textarea(
-            type="text"
-            v-model="content"
-            placeholder="Fanfic Content here!"
-          )
+        //- .fanfic-content-edit
+        //-   textarea(
+        //-     type="text"
+        //-     v-model="content"
+        //-     placeholder="Fanfic Content here!"
+        //-   )
+        vue-simplemde(v-model='content' ref='markdownEditor')
         input.fandom(
           type="text"
           placeholder="Fandom"
@@ -43,6 +44,8 @@
 </template>
 
 <script>
+import VueSimplemde from 'vue-simplemde'
+
 export default {
   data () {
     return {
@@ -59,9 +62,11 @@ export default {
     createFanfic () {
       const fanfic = {
         'name': this.fanficName,
-        'descriprion': this.fanficDescription,
+        'description': this.fanficDescription,
         'content': this.content,
-        'tags': this.tagsUsed
+        'fandom': this.fanficFandom,
+        'tags': this.tagsUsed,
+        'author': JSON.parse(localStorage.getItem('user')).username
       }
       this.$store.dispatch('fanfic/create', fanfic)
       // Reset
@@ -90,11 +95,16 @@ export default {
     tags () {
       return this.$store.getters.tags
     }
+  },
+  components: {
+    VueSimplemde
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+@import 'simplemde/dist/simplemde.min.css'
+
 .fanfic-content-edit
   textarea
     min-height 200px
