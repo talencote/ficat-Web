@@ -66,12 +66,17 @@ export default {
     removeFandom (fandom) {
       // this.fandoms = this.fandoms.splice(this.fandoms.indexOf(fandom), 1)
       this.$store.dispatch('profile/removeFavFandom', fandom)
-      this.$store.dispatch('profile/getProfile')
+      setTimeout(() => {
+        this.fandom = ''
+        this.$router.go()
+      }, 1000)
     },
     addFandom () {
       this.$store.dispatch('profile/addFavFandom', this.fandom)
-      this.fandom = ''
-      this.$store.dispatch('profile/getProfile')
+      setTimeout(() => {
+        this.fandom = ''
+        this.$router.go()
+      }, 1000)
     }
   }
 }
