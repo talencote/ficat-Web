@@ -54,9 +54,13 @@ export default {
       return det
     },
     fandoms () {
-      let arr = this.userDetails.favoriteFandoms.split(';')
-      arr.pop()
-      return arr
+      if (this.userDetails.favoriteFandoms !== null) {
+        let arr = this.userDetails.favoriteFandoms.split(';')
+        arr.pop()
+        return arr
+      } else {
+        return null
+      }
     }
   },
   methods: {
@@ -105,6 +109,9 @@ input
   margin-bottom 8px
   &:last-child
     margin-bottom 0px
+
+.button.button--round.button-warning
+  height 40px
 
 .ui-card.ui-card--shadow
   display flex

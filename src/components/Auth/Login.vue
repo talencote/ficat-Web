@@ -82,8 +82,13 @@ export default {
               () => {
                 setTimeout(() => {
                   this.submitStatus = 'OK'
-                  this.$router.push('/')
-                  this.$router.go('/')
+                  if (JSON.parse(localStorage.getItem('userDetails')).favoriteFandoms !== null) {
+                    this.$router.push('/')
+                    this.$router.go('/')
+                  } else {
+                      this.$router.push('/profile')
+                      this.$router.go('/')
+                  }
                 }, 1000)
               }
             )

@@ -61,7 +61,6 @@ function getProfile () {
     .then(handleResponse)
     .then(
       userDetails => {
-        console.log(JSON.stringify(userDetails))
         localStorage.setItem('userDetails', JSON.stringify(userDetails))
 
         return userDetails
