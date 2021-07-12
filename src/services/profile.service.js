@@ -1,6 +1,5 @@
 import { authToken } from '../helpers/auth-token'
 import { authHeader } from '../helpers/auth-header'
-import { userService } from './user.service'
 
 export const profileService = {
   removeFavFandom,
@@ -23,7 +22,7 @@ function removeFavFandom (fandom) {
 
   return fetch(`api/profile/remove_favorite_fandom`, requestOptions)
     .then(data => {
-      userService.getProfile(id)
+      getProfile()
 
       return data
     })
@@ -44,23 +43,23 @@ function addFavFandom (fandom) {
 
   return fetch(`api/profile/add_favorite_fandom`, requestOptions)
     .then(data => {
-      getProfile(id)
+      getProfile()
 
       return data
     })
 }
 
-function getProfile (id) {
+function getProfile () {
+  const id = Number(JSON.parse(localStorage.getItem('user')).id)
+
   const requestOptions = {
     method: 'GET',
     headers: authHeader()
   }
 
-  console.log('in getProfile')
   return fetch(`api/profile/${id}`, requestOptions)
     .then(
       userDetails => {
-        console.log('before set item')
         localStorage.setItem('userDetails', JSON.stringify(userDetails))
 
         return userDetails

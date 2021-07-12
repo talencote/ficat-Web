@@ -44,7 +44,6 @@ export default {
   methods: {
     logout () {
       this.$store.dispatch('authentication/logout')
-      console.log(this.$router)
       this.$router.push('/login')
       this.$router.go()
     }

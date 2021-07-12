@@ -25,7 +25,6 @@
           v-model="fanficFandom"
         )
         .tag-list
-          p {{ tagsUsed }}
           .ui-tag__wrapper(
             v-for="tag in tags"
             :key="tag.title"
@@ -64,7 +63,7 @@ export default {
         'content': this.content,
         'tags': this.tagsUsed
       }
-      this.$store.dispatch('newFanfic', fanfic)
+      this.$store.dispatch('fanfic/create', fanfic)
       // Reset
       this.fanficName = ''
       this.fanficDescription = ''

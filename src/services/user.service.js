@@ -21,8 +21,6 @@ function login (username, password) {
       if (user.accessToken) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user))
-
-        console.log('in login')
         getProfile(user.id)
       }
 
@@ -36,12 +34,10 @@ function getProfile (id) {
     headers: authHeader()
   }
 
-  console.log('in getProfile')
   return fetch(`api/profile/${id}`, requestOptions)
     .then(handleResponse)
     .then(
       userDetails => {
-        console.log('before set item')
         localStorage.setItem('userDetails', JSON.stringify(userDetails))
 
         return userDetails

@@ -4,9 +4,13 @@
       .container
         h1.ui-title-1 Home
     section
+      .button.button--round.button-warning(
+        @click="load()"
+        )
+        span Load
       .fanfic-list
         .fanfic-item(
-          v-for="fanfic in fanfics"
+          v-for="fanfic in test"
           :key="fanfic.id"
         )
           .ui-card.ui-card--shadow
@@ -26,9 +30,20 @@
 
 <script>
 export default {
+  data () {
+    return {
+      test: []
+    }
+  },
   computed: {
     fanfics () {
-      return this.$store.getters.fanfics
+      return this.$store.dispatch('fanfic/getPopular')
+    }
+  },
+  methods: {
+    load () {
+      const a = this.$store.dispatch('fanfic/getPopular')
+      console.log(this.$store.getters['fanfic/fanfics'])
     }
   }
 }
