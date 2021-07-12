@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import FanficEdit from '@/components/FanficEdit'
 import Login from '@/components/Auth/Login'
 import Registration from '@/components/Auth/Registration'
+import Profile from '@/components/Profile'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/registration',
       name: 'registration',
       component: Registration
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 })

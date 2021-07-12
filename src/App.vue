@@ -26,6 +26,11 @@
                   router-link.navbar-link(
                     :to="`${link.url}`"
                   ) {{ link.title }}
+                li.navbar-item(
+                  v-if="checkUser"
+                  @click="logout"
+                )
+                  span.navbar-link Logout
     router-view
 </template>
 
@@ -33,10 +38,31 @@
 export default {
   data () {
     return {
-      menuShow: false,
-      linkMenu: [
+      menuShow: false
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('authentication/logout')
+      console.log(this.$router)
+      this.$router.push('/login')
+      this.$router.go()
+    }
+  },
+  computed: {
+    checkUser () {
+      return (localStorage.getItem('user') !== null)
+    },
+    linkMenu () {
+      if (this.checkUser) {
+        return [
+          {title: 'Home', url: '/'},
+          {title: 'Profile', url: '/profile'},
+          {title: 'Fanfic Edit', url: '/fanficEdit'}
+        ]
+      }
+      return [
         {title: 'Home', url: '/'},
-        {title: 'Fanfic Edit', url: '/fanficEdit'},
         {title: 'Login', url: '/login'},
         {title: 'Registration', url: '/registration'}
       ]

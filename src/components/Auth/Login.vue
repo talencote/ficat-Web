@@ -78,10 +78,15 @@ export default {
         const { dispatch } = this.$store
         if (username && password) {
           dispatch('authentication/login', { username, password })
-          if (localStorage.getItem('user') !== null) {
-            this.submitStatus = 'OK'
-            this.$router.push('/')
-          }
+            .then(
+              () => {
+                setTimeout(() => {
+                  this.submitStatus = 'OK'
+                  this.$router.push('/')
+                  this.$router.go('/')
+                }, 1000)
+              }
+            )
         }
       }
     }

@@ -1,7 +1,5 @@
 import { authHeader } from '../helpers/auth-header'
 
-const API_URL = 'http://localhost:8081/api/'
-
 export const userService = {
   login,
   registration,
@@ -24,6 +22,7 @@ function login (username, password) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user))
 
+        console.log('in login')
         getProfile(user.id)
       }
 
@@ -37,10 +36,12 @@ function getProfile (id) {
     headers: authHeader()
   }
 
+  console.log('in getProfile')
   return fetch(`api/profile/${id}`, requestOptions)
     .then(handleResponse)
     .then(
       userDetails => {
+        console.log('before set item')
         localStorage.setItem('userDetails', JSON.stringify(userDetails))
 
         return userDetails
@@ -75,7 +76,7 @@ function getAll () {
     headers: authHeader()
   }
 
-  return fetch(`${API_URL}/users`, requestOptions).then(handleResponse)
+  return fetch(`api/users`, requestOptions).then(handleResponse)
 }
 
 function handleResponse (response) {
